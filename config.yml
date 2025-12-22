@@ -1,0 +1,55 @@
+# config.yml
+# This config file lives under cnc-version-control/, but the Git repo root is:
+#   D:\PROGRAMAS-CNC
+# So we point repo_root to the parent folder.
+#
+# Tip: create cnc-version-control/.env and define GITHUB_TOKEN there.
+
+repo_root: ./PROGRAMAS-CNC
+
+# Folder to watch (relative to repo_root). Keep your CNC files here.
+# programs_dir: cnc-version-control/programs
+programs_dir: ./
+
+max_depth: 5
+extensions: [".nc", ".txt"]
+debounce_seconds: 2
+ignore_patterns:
+  - "*.tmp"
+  - "*.bak"
+  - "Thumbs.db"
+  - ".DS_Store"
+  - ".git"
+  - ".git/*"
+  # - "cnc-version-control/logs/*"
+  - "./logs/*"
+
+watcher:
+  use_polling: true
+
+logging:
+  level: INFO
+  # file: cnc-version-control/logs/cnc-version-control.log
+  file: ./logs/cnc-version-control.log
+  max_bytes: 1048576
+  backup_count: 5
+
+git:
+  branch: main
+  remote_name: origin
+  pull_before_push: true
+  pull_strategy: rebase   # rebase | merge | ff-only
+  push_after_commit: true
+  max_push_retries: 5
+  retry_backoff_seconds: 10
+  token_env: GITHUB_TOKEN
+  remote_url: "https://github.com/CastilloAbel/PROGRAMAS-CNC.git"          # IMPORTANT: set to your repo, e.g. https://github.com/USER/REPO.git
+
+identity:
+  user_label: "${COMPUTERNAME}"
+  author_name: ""
+  author_email: ""
+
+conflicts:
+  # lock_file: cnc-version-control/logs/CONFLICT.lock
+  lock_file: ./logs/CONFLICT.lock
